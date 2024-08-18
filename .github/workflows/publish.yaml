@@ -17,13 +17,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: 3.11.9
-    - name: Install dependencies
+    - name: Install dependencies and Publish to TestPyPI
       run: |
         /bin/bash ./run.sh install
         /bin/bash ./run.sh build
         /bin/bash ./run.sh publish:test
-      env:
-        TEST_PYPI_TOKEN = ${{secrets.TEST_PYPI_TOKEN}}
+      env: 
+        TEST_PYPI_TOKEN: ${{secrets.TEST_PYPI_TOKEN}}
     # - name: Install dependencies
     #   run: |
     #     python -m pip install --upgrade pip
