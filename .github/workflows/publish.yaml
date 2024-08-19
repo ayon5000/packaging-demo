@@ -13,21 +13,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Set up Python 3.11.9
       uses: actions/setup-python@v3
       with:
         python-version: 3.11.9
+    - name: Tag with the release version
+      run: |
+        git tag some-tag
     - name: Install dependencies
       run: |
         /bin/bash ./run.sh install
+    - name: Linting, Format and Other Static Checks
+      run: |
+        /bin/bash ./run.sh lint:ci
     - name: Build Package
       run: |
         /bin/bash ./run.sh build
-    # - name: Publish to TestPyPI
-    #   run: |
-    #     /bin/bash ./run.sh publish:test
-    #   env: 
-    #     TEST_PYPI_TOKEN: ${{secrets.TEST_PYPI_TOKEN}}
+
+    - name: Publish to TestPyPI
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: |
+        /bin/bash ./run.sh publish:test
+      env:
+        TEST_PYPI_TOKEN: ${{secrets.TEST_PYPI_TOKEN}}
+    - name: Publish to ProdPyPI
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: |
+        /bin/bash ./run.sh publish:test
+      env:
+        PROD_PYPI_TOKEN: ${{secrets.PROD_PYPI_TOKEN}}
+    - name: Push Tag
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: |
+        git push origin --tags
     # - name: Install dependencies
     #   run: |
     #     python -m pip install --upgrade pip
