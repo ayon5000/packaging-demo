@@ -62,6 +62,11 @@ function publish:prod {
 
 # run linting, formatting, and other static code quality tools
 function lint {
+    pre-commit run --all-files
+}
+
+# run linting, formatting, and other static code quality tools
+function lint:ci {
     SKIP=no-commit-to-branch pre-commit run --all-files
 }
 
