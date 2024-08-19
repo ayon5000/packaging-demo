@@ -41,7 +41,7 @@ jobs:
     - name: Publish to ProdPyPI
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       run: |
-        /bin/bash ./run.sh publish:test
+        /bin/bash ./run.sh publish:prod
       env:
         PROD_PYPI_TOKEN: ${{secrets.PROD_PYPI_TOKEN}}
     - name: Push Tag
