@@ -55,7 +55,7 @@ function publish:test {
 function publish:prod {
     try-load-dotenv || true
     twine upload dist/* \
-        --repository testpypi \
+        --repository pypi \
         --username=__token__ \
         --password="$PROD_PYPI_TOKEN"
 }

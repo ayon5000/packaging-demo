@@ -21,7 +21,7 @@ jobs:
         python-version: 3.11.9
     - name: Tag with the release version
       run: |
-        git tag 0.0.1
+        git tag 0.0.2
     - name: Install dependencies
       run: |
         /bin/bash ./run.sh install
