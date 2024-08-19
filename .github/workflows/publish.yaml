@@ -21,7 +21,7 @@ jobs:
         python-version: 3.11.9
     - name: Tag with the release version
       run: |
-        git tag some-tag
+        git tag 0.0.1
     - name: Install dependencies
       run: |
         /bin/bash ./run.sh install
@@ -41,7 +41,7 @@ jobs:
     - name: Publish to ProdPyPI
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       run: |
-        /bin/bash ./run.sh publish:test
+        /bin/bash ./run.sh publish:prod
       env:
         PROD_PYPI_TOKEN: ${{secrets.PROD_PYPI_TOKEN}}
     - name: Push Tag
