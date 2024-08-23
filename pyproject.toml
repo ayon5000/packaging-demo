@@ -16,7 +16,7 @@ keywords = ["one", "two"]
 license = { text = "MIT" }
 classifiers = ["Programming Language :: Python :: 3"]
 dependencies = ["numpy", 'importlib-metadata; python_version<"3.8"']
-version = "0.0.1"
+dynamic = ["version"]
 
 [project.optional-dependencies]
 test = ["ruff","mypy","black","pytest","pytest-cov"]
@@ -25,6 +25,10 @@ all = ["mypackage-test-ayon[test,colors]"]
 release =["build","twine"]
 static-code-qa = ["pre-commit"]
 dev = ["mypackage-test-ayon[test,release,static-code-qa]"]
+
+# docs: https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#dynamic-metadata
+[tool.setuptools.dynamic]
+version = { file = "version.txt" }
 
 [tool.black]
 line-length = 119
