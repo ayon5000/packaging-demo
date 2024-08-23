@@ -40,6 +40,10 @@ function install {
     python -m pip install --editable "$THIS_DIR/[dev]"
 }
 
+function install_pre_commit {
+    python -m pip install pre-commit
+}
+
 function build {
     python -m build --sdist --wheel "$THIS_DIR/"
 }
