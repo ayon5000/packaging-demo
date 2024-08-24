@@ -86,6 +86,14 @@ function release:prod {
     publish:prod
 }
 
+function test:quick {
+    python -m pytest -m 'not slow' "$THIS_DIR/tests/"
+}
+
+function test:all {
+    python -m pytest "$THIS_DIR/tests/"
+}
+
 function start {
     build # Call task dependency
     python -m SimpleHTTPServer 9000
