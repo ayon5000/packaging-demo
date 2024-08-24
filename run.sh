@@ -149,6 +149,24 @@ function test:wheel-locally {
     return $PYTEST_EXIT_STATUS
 }
 
+
+function test:ci {
+    PYTEST_EXIT_STATUS=0
+    rm -rf test-reports
+    mkdir test-reports
+    INSTALLED_PKG_DIR="$(python -c 'import mypackage; print(mypackage.__path__[0])')"
+    python -m pytest -m 'not slow' "$THIS_DIR/tests/" \
+        --cov "$INSTALLED_PKG_DIR" \
+        --cov-report html \
+        --cov-report term \
+        --cov-report xml \
+        --junit-xml "$THIS_DIR/test-reports/report.xml" \
+        --cov-fail-under 20 || ((PYTEST_EXIT_STATUS+=$?))
+    mv coverage.xml "$THIS_DIR/test-reports/"
+    mv htmlcov "$THIS_DIR/test-reports/"
+    return $PYTEST_EXIT_STATUS
+}
+
 function start {
     build # Call task dependency
     python -m SimpleHTTPServer 9000
