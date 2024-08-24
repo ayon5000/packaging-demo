@@ -30,6 +30,11 @@ dev = ["mypackage-test-ayon[test,release,static-code-qa]"]
 [tool.setuptools.dynamic]
 version = { file = "version.txt" }
 
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
+
 [tool.black]
 line-length = 119
 exclude = "venv"
